@@ -24,6 +24,7 @@ export class CategoryService {
     );
   }
   create(category: Category): Observable<Category>{
+    console.log("Entrei neste metodo")
     return this.http.post(this.apiPath, category).pipe(
       catchError(this.handleError),
       map(this.jsonDataToCategory)
