@@ -3,6 +3,8 @@ import { Entry } from '../shared/entry.model';
 import { EntryService } from '../shared/entry.service';
 import { from } from 'rxjs';
 import { element } from 'protractor';
+import { Category } from '../../categories/shared/category.model';
+import { CategoryService } from '../../categories/shared/category.service';
 
 @Component({
   selector: 'app-entry-list',
@@ -10,14 +12,35 @@ import { element } from 'protractor';
   styleUrls: ['./entry-list.component.css']
 })
 export class EntryListComponent implements OnInit {
+  public listaCategorias: Category[] = [];
   entries: Entry[] = [];
-  constructor(private entryService: EntryService) { }
+  constructor(private entryService: EntryService,
+              private categoryService: CategoryService) { }
 
   ngOnInit() {
-    this.entryService.getAll().subscribe(
-      entries => this.entries = entries,
-      error => alert("Erro ao carregar a lista de lançamentos")
-    );
+    this.categoryService.getAll()
+    .subscribe(
+      (categories) => {
+        this.listaCategorias = categories
+        this.entryService.getAll().subscribe(
+          entries => {
+            this.entries = entries
+            this.entries.forEach(item => {
+              item.category = this.listaCategorias.find(x=> x.id == item.categoryId);
+            })
+            console.log("Passei aqui")    
+            console.log(this.entries);
+          },
+          error => alert("Erro ao carregar a lista de lançamentos")
+        );
+      },
+      (error) => {
+        alert("Erro ao carregar a lista de lançamentos")
+      }
+
+    )
+
+
   }
   deleteEntry(entry: Entry) {
     const mustDelete = confirm('Deseja realmente excluir o item');
