@@ -8,7 +8,7 @@ import { Entry } from "./entry.model";
   providedIn: 'root'
 })
 export class EntryService {
-  private apiPath: string = "http://localhost:3000/entry";
+  private apiPath: string = "http://localhost:3000/entries";
   constructor(private http: HttpClient) { }
   getAll(): Observable<Entry[]>{
     return this.http.get(this.apiPath).pipe(
@@ -47,11 +47,15 @@ export class EntryService {
   //PRIVATE
   private jsonDataToEntries(jsoonData: any[]): Entry[]{
     const entries: Entry[] = [];
-    jsoonData.forEach(element => entries.push(element as Entry));
+    jsoonData.forEach(element => {
+      const entry = Object.assign(new Entry(), element);
+      entries.push(entry)
+    });
+      
     return entries;
   }
   private jsonDataToEntry(jsoonData: any): Entry{
-    return jsoonData as Entry;
+    return Object.assign(new Entry(), jsoonData);
   }
   private handleError(error: any): Observable<any>{
     console.log("Erro na requisição => ", error);
