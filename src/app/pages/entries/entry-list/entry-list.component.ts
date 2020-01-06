@@ -28,8 +28,6 @@ export class EntryListComponent implements OnInit {
             this.entries.forEach(item => {
               item.category = this.listaCategorias.find(x=> x.id == item.categoryId);
             })
-            console.log("Passei aqui")    
-            console.log(this.entries);
           },
           error => alert("Erro ao carregar a lista de lançamentos")
         );
