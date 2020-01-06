@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterContentChecked } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
+import { DatePipe } from "@angular/common";
 
 import { Entry } from "../shared/entry.model";
 import { EntryService } from "../shared/entry.service";
@@ -20,14 +21,35 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   serverErrorMessage: string[] = null;
   submittingForm: boolean = false;
   entry: Entry = new Entry();
+  dataCalendario: Date
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandsSeparator: ".",
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radiz: ","
+  };
+  ptBR = {
+    firstDayOfWeek: 0,
+    dayNames: ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
+    dayNamesShort: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+    dayNamesMin: ["Do","Se","Te","Qu","Qu","Se","Sa"],
+    monthNames: [ "Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro" ],
+    monthNamesShort: [ "Jan", "Fev", "Mar", "Abr", "Mai", "Jun","Jul", "Ago", "Set", "Out", "Nov", "Dez" ],
+    today: 'Hoje',
+    clear: 'Limpar'
+};
   constructor(
     private entryService: EntryService,
     private route: ActivatedRoute,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private datePipe: DatePipe
   ) { }
 
   ngOnInit() {
+
     this.setCurrentAction();
     this.buildEntryForm()
     this.loadEntry();
