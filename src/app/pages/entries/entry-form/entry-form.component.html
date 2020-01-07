@@ -23,8 +23,8 @@
                         <div class="form-row">
                             <div class="form-group col-md-2">
                                 <label for="type">Tipo</label>
-                                <select name="type" id="type" formContrlName="type" class="form-control">
-                                    <option *ngFor="let option of typeOptions" [value]="option.value">{{option.text}}</option>
+                                <select name="type" id="type" formContrlName="type" class="form-control" (change)="selectchangeType($event.target.value)">
+                                    <option *ngFor="let option of types" [value]="option.id">{{option.desc}}</option>
 
                                 </select>
                                 <div class="text-danger"
@@ -101,7 +101,7 @@
                             <div class="form-group col-md-3">
                                 <label for="categoryId">Categoria</label>
                                 <select name="categoryId" id="categoryId" formContrlName="categoryId"
-                                    class="form-control">
+                                    class="form-control" (change)="selectchangeCategory($event.target.value)">
                                     <option *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
                                 </select>
                                 <div class="text-danger"

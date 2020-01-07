@@ -24,6 +24,12 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
   entry: Entry = new Entry();
   dataCalendario: Date
   categories:Array<Category>;
+  types = [
+    {id:"expense",
+     desc:"Despesa"},
+    {id: 'renevue',
+     desc: 'Receita'}];
+
   imaskConfig = {
     mask: Number,
     scale: 2,
@@ -77,7 +83,12 @@ export class EntryFormComponent implements OnInit, AfterContentChecked {
           }
       }
     )
-    
+  }
+  selectchangeCategory(item: number) {
+    this.entryForm.get('categoryId').setValue(item);
+  }
+  selectchangeType(item: string) {
+    this.entryForm.get('type').setValue(item);
   }
 
   //PRIVATE METHODS
