@@ -19,5 +19,4 @@ export class Entry{
     get paidText(): string{
         return this.paid ? 'Pago': 'Pendente';
     }
-    get
 }
