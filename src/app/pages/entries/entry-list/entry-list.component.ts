@@ -24,7 +24,7 @@ export class EntryListComponent implements OnInit {
         this.listaCategorias = categories
         this.entryService.getAll().subscribe(
           entries => {
-            this.entries = entries
+            this.entries = entries.sort((a,b) => b.id - a.id);
             this.entries.forEach(item => {
               item.category = this.listaCategorias.find(x=> x.id == item.categoryId);
             })
